@@ -415,7 +415,7 @@ fun BottomNavigationBar(
                             text = "Scan",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = if (currentRoute == BottomNavItem.Scan.route) Color(0xFFFF9800) else Color.White.copy(alpha = 0.7f)
+                            color = if (currentRoute == BottomNavItem.Scan.route) PrimaryAccent else Color.White.copy(alpha = 0.7f)
                         )
                     }
                 }

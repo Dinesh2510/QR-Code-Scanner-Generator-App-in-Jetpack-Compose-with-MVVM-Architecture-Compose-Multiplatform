@@ -30,6 +30,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 import com.pixeldev.compose.data.local.QrCodeEntity
 import com.pixeldev.compose.presentation.history.QrListItem
 import com.pixeldev.compose.ui.theme.DarkBackground
+import com.pixeldev.compose.ui.theme.PrimaryText
 
 @Composable
 fun FavoriteScreen(viewModel: QrViewModel) {
@@ -46,7 +47,7 @@ fun FavoriteScreen(viewModel: QrViewModel) {
             Text(
                 text = "No favorite QR codes found.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = androidx.compose.ui.graphics.Color.Gray
+                color = PrimaryText
             )
         }
     } else {
