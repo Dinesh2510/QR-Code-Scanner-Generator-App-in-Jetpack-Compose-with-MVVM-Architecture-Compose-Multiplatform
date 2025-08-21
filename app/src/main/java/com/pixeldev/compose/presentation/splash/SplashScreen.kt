@@ -1,5 +1,9 @@
 package com.pixeldev.compose.presentation.splash
+
+import com.pixeldev.compose.R
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -7,6 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -14,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.pixeldev.compose.domain.model.UiState
 import com.pixeldev.compose.presentation.navigation.Screen
+import com.pixeldev.compose.ui.theme.DarkSurface
 import kotlinx.coroutines.delay
 
 @Composable
@@ -31,17 +38,14 @@ fun SplashScreen(
     // Splash UI
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize().background(Color.White)
             .padding(24.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(painter = painterResource(R.drawable.ic_launcher), contentDescription = "")
+            Spacer(modifier = Modifier.height(25.dp))
             CircularProgressIndicator()
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Checking session...",
-                style = MaterialTheme.typography.bodyLarge
-            )
         }
     }
 }

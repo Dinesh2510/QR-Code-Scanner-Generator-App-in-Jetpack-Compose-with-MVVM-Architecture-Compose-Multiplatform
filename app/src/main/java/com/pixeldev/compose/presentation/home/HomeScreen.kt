@@ -69,6 +69,7 @@ import com.pixeldev.compose.presentation.drawer.PrivacyPolicyScreen
 import com.pixeldev.compose.presentation.drawer.TermsConditionsScreen
 import com.pixeldev.compose.presentation.navigation.AppRoutes
 import com.pixeldev.compose.presentation.scan.ScanQrScreen
+import com.pixeldev.compose.presentation.setting.SettingsScreen
 import com.pixeldev.compose.ui.theme.DarkSurface
 import com.pixeldev.compose.ui.theme.PrimaryAccent
 import com.pixeldev.compose.ui.theme.PrimaryText
@@ -116,9 +117,34 @@ fun MainScreen(rootNavController: NavHostController) {
     //  val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     // Handle back press
-    BackHandler(enabled = bottomCurrentRoute != BottomNavItem.History.route) {
+    /*BackHandler(enabled = bottomCurrentRoute != BottomNavItem.History.route) {
         if (bottomNavController.previousBackStackEntry != null) {
             bottomNavController.popBackStack()
+        }
+    }*/
+   /* val showExitDialog = remember { mutableStateOf(false) }
+
+    BackHandler {
+        if (bottomNavController.previousBackStackEntry != null) {
+            bottomNavController.popBackStack()
+        } else if (bottomCurrentRoute == BottomNavItem.History.route) {
+            showExitDialog.value = true
+        }
+    }*/
+    val activity = LocalContext.current as? Activity
+    val showExitDialog = remember { mutableStateOf(false) }
+
+    BackHandler {
+        Log.d("BackHandler", "Route: $bottomCurrentRoute")
+        if (bottomNavController.previousBackStackEntry != null) {
+            bottomNavController.popBackStack()
+        } else if (bottomCurrentRoute == BottomNavItem.History.route) {
+            Log.d("BackHandler", "Exiting app")
+            activity?.finish()
+        } else if (bottomCurrentRoute == BottomNavItem.Create.route) { /*Home Page*/
+            Log.d("BackHandler", "Exiting app")
+           // activity?.finish()
+            showExitDialog.value = true
         }
     }
 
@@ -260,24 +286,6 @@ fun MainScreen(rootNavController: NavHostController) {
                         colors = drawerItemColors
                     )
 
-                  /*  // Delete Account
-                    NavigationDrawerItem(
-                        label = { Text("Delete Account", color = Color.White) },
-                        icon = {
-                            Icon(
-                                Icons.Outlined.Delete,
-                                contentDescription = null,
-                                tint = Color.White
-                            )
-                        },
-                        // 💡 Use rootCurrentRoute for selection logic
-                        selected = rootCurrentRoute == AppRoutes.DELETE_ACCOUNT,
-                        onClick = {
-                            rootNavController.navigate(AppRoutes.DELETE_ACCOUNT)
-                            scope.launch { drawerState.close() }
-                        },
-                        colors = drawerItemColors
-                    )*/
 
                     Spacer(modifier = Modifier.weight(1f))
 
@@ -394,6 +402,22 @@ fun MainScreen(rootNavController: NavHostController) {
             )
         }
     }
+    CommonAlertDialog(
+        showDialog = showExitDialog.value,
+        onDismissRequest = { showExitDialog.value = false },
+        title = "Exit Application?",
+        message = "Are you sure you want to close the app?",
+        onConfirm = {
+            activity?.finish()
+            showExitDialog.value = false
+        },
+        onCancel = {
+            Toast.makeText(activity, "Exit cancelled.", Toast.LENGTH_SHORT).show()
+            showExitDialog.value = false
+        },
+        confirmButtonText = "Yes, Exit",
+        cancelButtonText = "No, Stay"
+    )
 }
 
 // --- BottomNavGraph.kt ---
@@ -417,7 +441,7 @@ fun BottomNavGraph(
             )
         }
         composable(BottomNavItem.Saved.route) { FavoriteScreen(viewModel) }
-        composable(BottomNavItem.Settings.route) { Screen("Settings Screen") }
+        composable(BottomNavItem.Settings.route) { SettingsScreen()}
     }
 
 }
