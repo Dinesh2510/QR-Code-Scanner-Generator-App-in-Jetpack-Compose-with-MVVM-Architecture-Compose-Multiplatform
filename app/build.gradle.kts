@@ -120,9 +120,9 @@ dependencies {
     implementation ("androidx.camera:camera-extensions:1.4.2")
 
 
-    val zxingVersion = "3.5.1"
-    implementation("com.google.zxing:core:$zxingVersion")
+        val zxingVersion = "3.5.1"
+        implementation("com.google.zxing:core:$zxingVersion")
 
-    implementation ("androidx.compose.runtime:runtime-livedata:1.8.3")
+        implementation ("androidx.compose.runtime:runtime-livedata:1.8.3")
 
 }
